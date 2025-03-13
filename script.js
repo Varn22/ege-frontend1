@@ -5,22 +5,30 @@ const BOT_ID = "7558875234"; // Замени на свой реальный ID �
 document.getElementById("loginTelegram").addEventListener("click", () => {
     window.open(`https://oauth.telegram.org/auth?bot_id=${BOT_ID}&origin=${window.location.origin}&embed=1`, "_blank");
 });
+// Функция для автоматической регистрации пользователя через Telegram Web-App
+async function registerUser() {
+    if (window.Telegram && Telegram.WebApp) {
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        if (user) {
+            document.getElementById("userName").textContent = `Привет, ${user.first_name}!`;
+            document.getElementById("userPhoto").src = user.photo_url;
+            document.getElementById("userProfile").classList.remove("hidden");
 
-async function checkAuth() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("id")) {
-        const telegramId = urlParams.get("id");
-        const name = urlParams.get("first_name");
-        document.getElementById("userInfo").textContent = `Привет, ${name}!`;
-        
-        await fetch(`${API_URL}/auth/telegram`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ telegram_id: telegramId, name })
-        });
+            // Отправляем данные на сервер
+            await fetch(`${API_URL}/auth/telegram`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    telegram_id: user.id,
+                    name: user.first_name,
+                    photo_url: user.photo_url
+                })
+            });
+        }
     }
 }
-checkAuth();
+
+
 
 document.getElementById("startTest").addEventListener("click", () => {
     document.getElementById("questionContainer").classList.remove("hidden");
