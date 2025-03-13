@@ -1,3 +1,4 @@
+/* Общие стили */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -5,11 +6,13 @@ body {
     color: white;
     margin: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
 }
 
+/* Контейнер с контентом */
 .container {
     background: white;
     color: black;
@@ -20,6 +23,7 @@ body {
     max-width: 400px;
 }
 
+/* Кнопки */
 button {
     background: #007BFF;
     color: white;
@@ -35,44 +39,58 @@ button {
 button:hover {
     background: #0056b3;
 }
-.user-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-top: 10px;
-}
 
-
-.hidden {
-    display: none;
-}
-
+/* Поля ввода */
 input {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 10px;
     margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
 }
 
+/* Профиль пользователя */
+#userProfile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.user-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-top: 10px;
+    border: 2px solid white;
+}
+
+/* Блок рейтинга */
 #leaderboard {
     margin-top: 20px;
-    background: #f8f9fa;
+    background: white;
+    color: black;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
 }
 
-#leaderboard ul {
-    list-style-type: none;
+#leaderboard h2 {
+    margin-bottom: 10px;
+}
+
+#leaderboardList {
+    list-style: none;
     padding: 0;
 }
 
-#leaderboard li {
-    background: white;
+#leaderboardList li {
+    background: #f1f1f1;
     margin: 5px 0;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
