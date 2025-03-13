@@ -16,6 +16,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
 }
 
 button {
@@ -26,6 +28,8 @@ button {
     margin-top: 10px;
     cursor: pointer;
     border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
 }
 
 button:hover {
@@ -34,4 +38,34 @@ button:hover {
 
 .hidden {
     display: none;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#leaderboard {
+    margin-top: 20px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#leaderboard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#leaderboard li {
+    background: white;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
