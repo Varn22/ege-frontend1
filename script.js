@@ -2,14 +2,14 @@ const API_URL = "https://ege-backend.onrender.com"; // Заменить на с�
 const BOT_ID = "7558875234"; // Замени на свой реальный ID бота
 
 
-document.getElementById("loginTelegram").addEventListener("click", () => {
-    window.open(`https://oauth.telegram.org/auth?bot_id=${BOT_ID}&origin=${window.location.origin}&embed=1`, "_blank");
-});
-// Функция для автоматической регистрации пользователя через Telegram Web-App
+let telegramId = null; // ID пользователя Telegram
+
+// 📌 Функция для автоматической регистрации через Telegram Web-App
 async function registerUser() {
     if (window.Telegram && Telegram.WebApp) {
         const user = Telegram.WebApp.initDataUnsafe.user;
         if (user) {
+            telegramId = user.id;
             document.getElementById("userName").textContent = `Привет, ${user.first_name}!`;
             document.getElementById("userPhoto").src = user.photo_url;
             document.getElementById("userProfile").classList.remove("hidden");
@@ -19,7 +19,7 @@ async function registerUser() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    telegram_id: user.id,
+                    telegram_id: telegramId,
                     name: user.first_name,
                     photo_url: user.photo_url
                 })
@@ -28,13 +28,7 @@ async function registerUser() {
     }
 }
 
-
-
-document.getElementById("startTest").addEventListener("click", () => {
-    document.getElementById("questionContainer").classList.remove("hidden");
-    loadQuestion();
-});
-
+// 📌 Функция загрузки тестового вопроса
 async function loadQuestion() {
     try {
         const res = await fetch(`${API_URL}/get_question`);
@@ -45,27 +39,29 @@ async function loadQuestion() {
     }
 }
 
-document.getElementById("submitAnswer").addEventListener("click", async () => {
+// 📌 Функция отправки ответа
+async function submitAnswer() {
     const answer = document.getElementById("answerInput").value;
     if (!answer) return alert("Введите ответ!");
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const telegramId = urlParams.get("id") || "guest";
 
     try {
         const res = await fetch(`${API_URL}/check_answer`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ telegram_id: telegramId, answer })
+            body: JSON.stringify({
+                telegram_id: telegramId,
+                answer
+            })
         });
         const data = await res.json();
         document.getElementById("responseMessage").textContent = data.message;
     } catch (error) {
         document.getElementById("responseMessage").textContent = "Ошибка отправки ответа";
     }
-});
+}
 
-document.getElementById("showLeaderboard").addEventListener("click", async () => {
+// 📌 Функция загрузки рейтинга пользователей
+async function loadLeaderboard() {
     try {
         const res = await fetch(`${API_URL}/leaderboard`);
         const data = await res.json();
@@ -80,4 +76,17 @@ document.getElementById("showLeaderboard").addEventListener("click", async () =>
     } catch (error) {
         alert("Ошибка загрузки рейтинга");
     }
+}
+
+// 📌 Запускаем регистрацию при загрузке страницы
+registerUser();
+
+// 📌 Назначаем обработчики событий
+document.getElementById("startTest").addEventListener("click", () => {
+    document.getElementById("questionContainer").classList.remove("hidden");
+    loadQuestion();
 });
+
+document.getElementById("submitAnswer").addEventListener("click", submitAnswer);
+document.getElementById("showLeaderboard").addEventListener("click", loadLeaderboard);
+
