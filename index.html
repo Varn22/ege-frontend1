@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <button id="loginTelegram">🔑 Войти через Telegram</button>
-    <p id="userInfo"></p>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подготовка к ЕГЭ</title>
@@ -13,12 +10,22 @@
     <div class="container">
         <h1>📚 Подготовка к ЕГЭ по русскому</h1>
         <p>Пройди тесты, изучай ошибки и улучшай свои результаты!</p>
+        
+        <button id="loginTelegram">🔑 Войти через Telegram</button>
+        <p id="userInfo"></p>
+        
         <button id="startTest">Начать тестирование</button>
         <div id="questionContainer" class="hidden">
             <p id="questionText">Загрузка вопроса...</p>
             <input type="text" id="answerInput" placeholder="Введите номер ответа...">
             <button id="submitAnswer">Отправить</button>
             <p id="responseMessage"></p>
+        </div>
+        
+        <button id="showLeaderboard">🏆 ТОП игроков</button>
+        <div id="leaderboard" class="hidden">
+            <h2>🏅 Рейтинг</h2>
+            <ul id="leaderboardList"></ul>
         </div>
     </div>
     <script src="script.js"></script>
